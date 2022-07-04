@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import ToDo from "./ToDo";
 
 export interface ToDoListProps {
@@ -9,7 +9,7 @@ export interface ToDoListProps {
 
 const ToDoList: React.FC = () => {
   const [desc, setDesc] = useState<string>(() => "");
-  const [editToDo, setEditToDo] = useState(() => -1);
+  const [editToDo, setEditToDo] = useState<number>(() => -1);
   const inputRef = useRef<any>();
   const [toDoList, setToDoList] = useState<Array<ToDoListProps>>(() => [
     {

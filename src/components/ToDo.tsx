@@ -24,6 +24,7 @@ const ToDo: React.FC<Props> = ({
       <button onClick={() => updateDesc(id)}>Edit</button>
       <button onClick={() => deleteTask(id)}>Delete</button>
       <br />
+      <br />
     </div>
   );
 };
