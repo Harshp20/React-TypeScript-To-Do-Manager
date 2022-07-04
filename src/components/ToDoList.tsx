@@ -1,7 +1,7 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import ToDo from "./ToDo";
 
-export interface ToDoListProps {
+export interface ToDoList {
   id: number;
   desc: string;
   status: boolean;
@@ -11,7 +11,7 @@ const ToDoList: React.FC = () => {
   const [desc, setDesc] = useState<string>(() => "");
   const [editToDo, setEditToDo] = useState<number>(() => -1);
   const inputRef = useRef<any>();
-  const [toDoList, setToDoList] = useState<Array<ToDoListProps>>(() => [
+  const [toDoList, setToDoList] = useState<Array<ToDoList>>(() => [
     {
       id: 1,
       desc: "Feed the cat",
@@ -30,14 +30,13 @@ const ToDoList: React.FC = () => {
   ]);
 
   const addTask = () => {
-    setDesc(desc.trim());
-
     if (desc.length === 0) {
       setDesc("");
       return;
     }
 
-    if (toDoList.find((toDo) => toDo.desc === desc)) return;
+    if (toDoList.find((toDo) => toDo.desc.toLocaleLowerCase() === desc.toLocaleLowerCase()))
+      return;
 
     if (editToDo > 0) {
       setToDoList(
@@ -54,7 +53,7 @@ const ToDoList: React.FC = () => {
       setEditToDo(-1);
     } else
       setToDoList(() => [
-        { id: toDoList.length + 1, desc, status: false },
+        { id: Math.floor(Math.random() * 100) + 1, desc, status: false },
         ...toDoList,
       ]);
 
@@ -67,10 +66,10 @@ const ToDoList: React.FC = () => {
   };
 
   const updateDesc = (id: number) => {
-    toDoList.map((toDo) =>
-      toDo.id === id ? (inputRef.current.value = toDo.desc) : ""
-    );
     setEditToDo(id);
+    toDoList.map((toDo) =>
+      toDo.id === editToDo ? (inputRef.current.value = toDo.desc) : ""
+    );
   };
 
   const toggleToDo = (id: number) => {
@@ -88,8 +87,8 @@ const ToDoList: React.FC = () => {
         ref={inputRef}
         type="text"
         placeholder="Add a task"
-        onChange={(e) => setDesc(e.target.value)}
         value={desc}
+        onChange={(e) => setDesc(e.target.value.trim())}
         onKeyUp={(e) => (e.key === "Enter" ? addTask() : null)}
       />
       <button onClick={addTask}>Add Task</button>

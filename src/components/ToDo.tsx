@@ -1,7 +1,7 @@
-import { ToDoListProps } from "./ToDoList";
+import { ToDoList } from "./ToDoList";
 
 interface Props {
-  toDo: ToDoListProps;
+  toDo: ToDoList;
   deleteTask: (id: number) => void;
   updateDesc: (id: number) => void;
   toggleToDo: (id: number) => void;
