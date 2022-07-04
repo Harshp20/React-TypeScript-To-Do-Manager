@@ -30,12 +30,17 @@ const ToDoList: React.FC = () => {
   ]);
 
   const addTask = () => {
+
     if (desc.length === 0) {
       setDesc("");
       return;
     }
 
-    if (toDoList.find((toDo) => toDo.desc.toLocaleLowerCase() === desc.toLocaleLowerCase()))
+    if (
+      toDoList.find(
+        (toDo) => toDo.desc.toLowerCase() === desc.toLowerCase()
+      )
+    )
       return;
 
     if (editToDo > 0) {
@@ -57,7 +62,7 @@ const ToDoList: React.FC = () => {
         ...toDoList,
       ]);
 
-    setDesc("");
+    inputRef.current.value = ''
   };
 
   const deleteTask = (id: number) => {
@@ -87,7 +92,6 @@ const ToDoList: React.FC = () => {
         ref={inputRef}
         type="text"
         placeholder="Add a task"
-        value={desc}
         onChange={(e) => setDesc(e.target.value.trim())}
         onKeyUp={(e) => (e.key === "Enter" ? addTask() : null)}
       />
