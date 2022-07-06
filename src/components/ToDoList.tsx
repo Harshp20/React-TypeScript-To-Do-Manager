@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import ToDo from "./ToDo";
 
 export interface ToDoList {
@@ -8,8 +8,8 @@ export interface ToDoList {
 }
 
 const ToDoList: React.FC = () => {
-  const [desc, setDesc] = useState<string>(() => "");
-  const [editToDo, setEditToDo] = useState<number>(() => -1);
+  const [desc, setDesc] = useState(() => "");
+  const [editToDo, setEditToDo] = useState(() => -1);
   const inputRef = useRef<any>();
   const [toDoList, setToDoList] = useState<Array<ToDoList>>(() => [
     {
@@ -30,17 +30,12 @@ const ToDoList: React.FC = () => {
   ]);
 
   const addTask = () => {
-
     if (desc.length === 0) {
       setDesc("");
       return;
     }
 
-    if (
-      toDoList.find(
-        (toDo) => toDo.desc.toLowerCase() === desc.toLowerCase()
-      )
-    )
+    if (toDoList.find((toDo) => toDo.desc.toLowerCase() === desc.toLowerCase()))
       return;
 
     if (editToDo > 0) {
@@ -62,7 +57,7 @@ const ToDoList: React.FC = () => {
         ...toDoList,
       ]);
 
-    inputRef.current.value = ''
+    inputRef.current.value = "";
   };
 
   const deleteTask = (id: number) => {
